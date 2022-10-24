@@ -1,4 +1,11 @@
-import { MAX_COUNT_PHOTOS, CountLike, getRandomPositiveInteger} from './util';
+import {getRandomPositiveInteger} from './util.js';
+
+const MAX_COUNT_PHOTOS = 25;
+
+const CountLike = {
+  MIN: 15,
+  MAX: 200
+};
 
 const NAMES = ['Анастасия', 'Мария', 'Александр', 'Артём', 'Юлия'];
 const MESSAGES = ['Всё отлично!',
@@ -29,4 +36,6 @@ const CreatePhotoData = (id) => ({
   comments: Array.from({length: getRandomPositiveInteger(1, 6)}).map((value, index) => CreateUserData(index + 1)),
 });
 
-export{CreatePhotoData};
+const getPhoto = Array.from({length: MAX_COUNT_PHOTOS}).map((value, index) => CreatePhotoData(index + 1));
+
+export{getPhoto};

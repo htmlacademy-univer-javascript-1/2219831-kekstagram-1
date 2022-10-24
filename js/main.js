@@ -1,7 +1,5 @@
-import { MAX_COUNT_PHOTOS } from './util';
-import { CreatePhotoData } from './data';
+import {getPhoto} from './data.js';
+import { draw } from './drawaround.js';
 
-
-// eslint-disable-next-line no-unused-vars
-const PHOTOS = Array.from({length: MAX_COUNT_PHOTOS}).map((value, index) => CreatePhotoData(index + 1));
-
+const data = getPhoto;
+draw(data);
