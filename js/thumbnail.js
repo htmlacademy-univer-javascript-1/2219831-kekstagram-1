@@ -8,6 +8,6 @@ const getPictureTemplate = ({url, comments, likes}) => `<a href="#" class="pictu
 
 const mainContainer = document.querySelector('.js-pictures');
 
-const draw = (data) => mainContainer.insertAdjacentHTML('beforeend' , data.map((photo) => getPictureTemplate(photo)).join(''));
+const createPhotosAround = (data) => mainContainer.insertAdjacentHTML('beforeend' , data.map((photo) => getPictureTemplate(photo)).join(''));
 
-export{draw};
+export{createPhotosAround};

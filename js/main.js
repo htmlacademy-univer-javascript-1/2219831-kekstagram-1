@@ -1,5 +1,5 @@
-import {getPhoto} from './data.js';
-import { draw } from './drawaround.js';
+import {getPhotos} from './data.js';
+import { createPhotosAround } from './thumbnail.js';
 
-const data = getPhoto;
-draw(data);
+const data = getPhotos();
+createPhotosAround(data);
