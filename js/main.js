@@ -1,5 +1,3 @@
-import {getPhotos} from './data.js';
-import { createPhotosAround } from './thumbnail.js';
+import { bringPicturesLife } from './thumbnail.js';
 
-const data = getPhotos();
-createPhotosAround(data);
+bringPicturesLife();
