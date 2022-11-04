@@ -28,27 +28,31 @@ const renderPicture = (picture) => {
   getComments(picture.comments);
 };
 
-const closeByEsc = (evt) => {
-  if(evt.key === 'Escape') {
-    document.body.classList.remove('modal-open');
-    fullScreenPicture.classList.add('hidden');
-    document.removeEventListener('keydown', closeByEsc);
-  }
-};
-
 const closePicture = () => {
   document.body.classList.remove('modal-open');
   fullScreenPicture.classList.add('hidden');
-  closeButton.removeEventListener('click', closePicture);
-  document.removeEventListener('keydown', closeByEsc);
 };
+
+const onPictureEscKeydown = (evt) => {
+  if(evt.key === 'Escape') {
+    closePicture();
+    document.removeEventListener('keydown', onPictureEscKeydown);
+  }
+};
+
+const onPictureCloseButton = () => {
+  closePicture();
+  closeButton.removeEventListener('click', onPictureCloseButton);
+  document.removeEventListener('keydown', onPictureEscKeydown);
+};
+
 
 const visualiseBigPicture = (element) => {
   document.body.classList.add('modal-open');
   fullScreenPicture.classList.remove('hidden');
   renderPicture(element);
-  closeButton.addEventListener('click', closePicture);
-  document.addEventListener('keydown', closeByEsc);
+  closeButton.addEventListener('click', onPictureCloseButton);
+  document.addEventListener('keydown', onPictureEscKeydown);
 };
 
 export { visualiseBigPicture };
