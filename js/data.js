@@ -1,4 +1,4 @@
-import {getRandomPositiveInteger} from './util.js';
+import { getRandomPositiveInteger } from './util.js';
 import { MAX_COUNT_PHOTOS, CountLike } from './consts.js';
 
 const NAMES = ['Анастасия', 'Мария', 'Александр', 'Артём', 'Юлия'];
@@ -32,4 +32,4 @@ const CreatePhotoData = (id) => ({
 
 const getPhotos = () => Array.from({length: MAX_COUNT_PHOTOS}).map((value, index) => CreatePhotoData(index + 1));
 
-export{getPhotos};
+export { getPhotos };
