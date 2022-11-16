@@ -1,5 +1,5 @@
-import { isEsc } from './util.js';
-import { onInput, commentHandler, hashtagsHandler, pristine, error } from './validate.js';
+import { isEscKey } from './util.js';
+import { changeDisableStateSubmitBtn, commentHandler, hashtagsHandler, pristine, error } from './validate.js';
 
 const file = document.querySelector('#upload-file');
 const body = document.querySelector('body');
@@ -18,7 +18,7 @@ const closePopup = () => {
 
 
 const onButtonEscKeydown = (evt) => {
-  if (isEsc(evt)) {
+  if (isEscKey(evt)) {
     closePopup();
     document.removeEventListener('keydown', onButtonEscKeydown);
   }
@@ -52,8 +52,8 @@ const onImgUploadFieldchange = () => {
 
 const renderUploadForm = () => {
   file.addEventListener('change', onImgUploadFieldchange);
-  hashtags.addEventListener('input', onInput);
-  comments.addEventListener('input', onInput);
+  hashtags.addEventListener('input', changeDisableStateSubmitBtn);
+  comments.addEventListener('input', changeDisableStateSubmitBtn);
   pristine.addValidator(hashtags, hashtagsHandler, error);
   pristine.addValidator(comments, commentHandler, error);
   form.addEventListener('submit', (e) => {

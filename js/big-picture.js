@@ -1,4 +1,4 @@
-import { isEsc } from './util.js';
+import { isEscKey } from './util.js';
 
 const fullScreenPicture = document.querySelector('.big-picture');
 const closeButton = document.querySelector('.big-picture__cancel');
@@ -36,7 +36,7 @@ const closePicture = () => {
 };
 
 const onPictureEscKeydown = (evt) => {
-  if(isEsc(evt)) {
+  if(isEscKey(evt)) {
     closePicture();
     document.removeEventListener('keydown', onPictureEscKeydown);
   }

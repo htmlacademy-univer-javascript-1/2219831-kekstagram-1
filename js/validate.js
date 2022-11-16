@@ -98,8 +98,8 @@ const commentHandler = (string) => {
   return !isInvalid;
 };
 
-const onInput = () => {
+const changeDisableStateSubmitBtn = () => {
   submitButton.disabled = !pristine.validate();
 };
 
-export {onInput, commentHandler, hashtagsHandler, pristine, error};
+export {changeDisableStateSubmitBtn , commentHandler, hashtagsHandler, pristine, error};
