@@ -4,7 +4,9 @@ const getRandomPositiveInteger = (a, b) => {
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
 };
-const checkStringLength = (string, length) => string.length <= length;
-checkStringLength('чтобы линтер не ругался', 60);
 
-export{getRandomPositiveInteger};
+const checkStringLength = (string, length) => string.length <= length;
+
+const isEscKey = (evt) => evt.key === 'Escape';
+
+export{getRandomPositiveInteger, isEscKey, checkStringLength};
