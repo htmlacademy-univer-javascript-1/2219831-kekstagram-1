@@ -1,4 +1,4 @@
-import { visualiseBigPicture } from './big-picture.js';
+import { openBigPicture } from './big-picture.js';
 import { getPhotos } from './data.js';
 
 const getPictureTemplate = ({id, url, comments, likes}) => `<a href="#" class="picture js-picture" data-id="${id}">
@@ -18,7 +18,7 @@ const onPictureClick = (evt) => {
   const target = evt.target;
   const parent = target.closest('.js-picture');
   const id = +parent.dataset.id;
-  visualiseBigPicture(data[id - 1]);
+  openBigPicture(data[id - 1]);
 };
 
 const bringPicturesLife = () => {
