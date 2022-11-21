@@ -13,20 +13,20 @@ const data = getPhotos();
 const mainContainer = document.querySelector('.js-pictures');
 const createPhotosAround = () => mainContainer.insertAdjacentHTML('beforeend', data.map((photo) => getPictureTemplate(photo)).join(''));
 
-const onPictureClick = (evt) => {
-  evt.preventDefault();
+const onPicturesClick = (evt) => {
   const target = evt.target;
   const parent = target.closest('.js-picture');
-  const id = +parent.dataset.id;
-  openBigPicture(data[id - 1]);
+
+  if (parent) {
+    const id = parent.dataset.id;
+    const [ photo ] = data.filter((element) => element.id === +id);
+    openBigPicture(photo);
+  }
 };
 
 const bringPicturesLife = () => {
   createPhotosAround();
-  const pictures = document.querySelectorAll('.js-picture');
-  pictures.forEach((picture) => {
-    picture.addEventListener('click', onPictureClick);
-  });
+  mainContainer.addEventListener('click', onPicturesClick);
 };
 
 export { bringPicturesLife };
