@@ -22,4 +22,12 @@ const ErrorMessage = {
   COMMENT_MAX_LENGTH: `Максимальная длина комментария не может составлять больше ${MAX_COMMENT_LENGTH} символов`
 };
 
-export{MAX_COUNT_PHOTOS, CountLike, MAX_COMMENT_LENGTH, MaxHashtag, ErrorMessage};
+const CountComment = {
+  MIN: 0,
+  MAX: 23
+};
+
+const STEP_ADDED_COMMENTS = 5;
+const DEFAULT_RENDERED_COMMENTS = 5;
+
+export{MAX_COUNT_PHOTOS, CountLike, MAX_COMMENT_LENGTH, MaxHashtag, ErrorMessage, STEP_ADDED_COMMENTS, DEFAULT_RENDERED_COMMENTS, CountComment};

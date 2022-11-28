@@ -1,5 +1,5 @@
 import { getRandomPositiveInteger } from './util.js';
-import { MAX_COUNT_PHOTOS, CountLike } from './consts.js';
+import { MAX_COUNT_PHOTOS, CountLike, CountComment } from './consts.js';
 
 const NAMES = ['Анастасия', 'Мария', 'Александр', 'Артём', 'Юлия'];
 const MESSAGES = ['Всё отлично!',
@@ -17,7 +17,7 @@ const DESCRIPTIONS = ['Когда радости нет предела.',
 
 const CreateUserData = (id) => ({
   id,
-  avatar: `img/avatar-${getRandomPositiveInteger(1, MAX_COUNT_PHOTOS)}.svg`,
+  avatar: `img/avatar-${getRandomPositiveInteger(1, 6)}.svg`,
   message: MESSAGES[getRandomPositiveInteger(0, MESSAGES.length - 1)],
   name: NAMES[getRandomPositiveInteger(0, NAMES.length - 1)],
 });
@@ -27,7 +27,7 @@ const CreatePhotoData = (id) => ({
   url: `photos/${id}.jpg`,
   description: DESCRIPTIONS[getRandomPositiveInteger(0, DESCRIPTIONS.length - 1)],
   likes: getRandomPositiveInteger(CountLike.MIN, CountLike.MAX),
-  comments: Array.from({length: getRandomPositiveInteger(1, 6)}).map((value, index) => CreateUserData(index + 1)),
+  comments: Array.from({length: getRandomPositiveInteger(CountComment.MIN, CountComment.MAX)}).map((value, index) => CreateUserData(index + 1)),
 });
 
 const getPhotos = () => Array.from({length: MAX_COUNT_PHOTOS}).map((value, index) => CreatePhotoData(index + 1));
