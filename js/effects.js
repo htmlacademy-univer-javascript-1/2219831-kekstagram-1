@@ -1,4 +1,4 @@
-import { Effects, SLIDER_STEP, ScaleRange } from './consts.js';
+import { Effects, SCALE_STEP, ScaleRange } from './consts.js';
 
 const imageForChange = document.querySelector('.img-upload__preview').querySelector('img');
 const slider = document.querySelector('.effect-level__slider');
@@ -19,7 +19,7 @@ const checkScaleClicks = (val) => {
 };
 
 const changeScale = (val) => {
-  const sliderNumber = checkScaleClicks(Number(scaleControlValue.value.replace('%', '')) + SLIDER_STEP * val);
+  const sliderNumber = checkScaleClicks(Number(scaleControlValue.value.replace('%', '')) + SCALE_STEP * val);
   imageForChange.style.transform = `scale(${sliderNumber / 100})`;
   scaleControlValue.value = `${sliderNumber}%`;
 };

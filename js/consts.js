@@ -51,11 +51,11 @@ const Effects = {
   }
 };
 
-const SLIDER_STEP = 25;
+const SCALE_STEP = 25;
 const ScaleRange = {
   min: 25,
   max: 100
 };
 
 export {MAX_COUNT_PHOTOS, CountLike, MAX_COMMENT_LENGTH, MaxHashtag, ErrorMessage, STEP_ADDED_COMMENTS,
-  DEFAULT_RENDERED_COMMENTS, CountComment, Effects, SLIDER_STEP, ScaleRange};
+  DEFAULT_RENDERED_COMMENTS, CountComment, Effects, SCALE_STEP, ScaleRange};
