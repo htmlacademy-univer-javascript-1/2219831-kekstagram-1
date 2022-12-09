@@ -82,14 +82,17 @@ const renderUploadForm = () => {
     if (pristine.validate()) {
       blockSubmitButton();
       sendData(() => {
-        setTimeout(showAlert, 1000);
+        showAlert();
         unblockSubmitButton();
+        closePopup();
       },
       () => {
         showAlert(true);
         unblockSubmitButton();
+        closePopup();
       },
-      new FormData(e.target), closePopup);
+      new FormData(e.target),
+      );
     }
   });
 };
