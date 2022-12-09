@@ -1,4 +1,5 @@
-import { isEscKey, showAlert } from './util.js';
+import { isEscKey } from './util.js';
+import {showAlert} from './message.js';
 import { changeDisableStateSubmitBtn, commentHandler, hashtagsHandler, pristine, error } from './validate.js';
 import { updateSliderSettings, onScaleButtonClick } from './effects.js';
 import {sendData} from './api.js';
