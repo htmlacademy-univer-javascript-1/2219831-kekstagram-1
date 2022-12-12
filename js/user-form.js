@@ -1,6 +1,6 @@
-import { isEscKey } from './util.js';
+import { isEscKey } from './utils.js';
 import { showMessage } from './message.js';
-import { onCommentDisableSubmitBtn, commentHandler, hashtagsHandler, pristine, error, onHashtagDisableSubmitBtn } from './validate.js';
+import { onCommentInput, onHashtagsInput, pristine, error } from './validate.js';
 import { updateSliderSettings, onScaleButtonClick } from './effects.js';
 import {sendData} from './api.js';
 import { createSlider } from './effects.js';
@@ -46,6 +46,13 @@ const checkFieldInFocus = (field) => {
   });
 };
 
+const onCommentDisableSubmitBtn = () => {
+  submitButton.disabled = !pristine.validate();
+};
+
+const onHashtagDisableSubmitBtn = () => {
+  submitButton.disabled = !pristine.validate();
+};
 
 const onImgUploadFieldchange = () => {
   imageForChange.removeAttribute('class');
@@ -58,6 +65,7 @@ const onImgUploadFieldchange = () => {
   checkFieldInFocus(hashtags);
   uploadEffects.addEventListener('change', updateSliderSettings);
   onScaleButtonClick();
+  //здесь будет условие для формата файла (это делается в дз 12 модуля)
 };
 
 
@@ -78,8 +86,8 @@ const renderUploadForm = () => {
   file.addEventListener('change', onImgUploadFieldchange);
   hashtags.addEventListener('input', onHashtagDisableSubmitBtn);
   comments.addEventListener('input', onCommentDisableSubmitBtn);
-  pristine.addValidator(hashtags, hashtagsHandler, error);
-  pristine.addValidator(comments, commentHandler, error);
+  pristine.addValidator(hashtags, onHashtagsInput, error);
+  pristine.addValidator(comments, onCommentInput, error);
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     if (pristine.validate()) {

@@ -1,4 +1,4 @@
-import { isEscKey } from './util.js';
+import { isEscKey } from './utils.js';
 
 const onWindowEscKeydown = (evt) => {
   const message = document.querySelector('.js-message');
@@ -19,6 +19,9 @@ const showMessage = (isError) => {
   const button = popup.querySelector('button');
   document.addEventListener('keydown', onWindowEscKeydown);
   button.addEventListener('click', () => {
+    popup.remove();
+  });
+  document.addEventListener('click', () => {
     popup.remove();
   });
 };
