@@ -98,8 +98,12 @@ const commentHandler = (string) => {
   return !isInvalid;
 };
 
-const changeDisableStateSubmitBtn = () => {
+const onCommentDisableSubmitBtn = () => {
   submitButton.disabled = !pristine.validate();
 };
 
-export {changeDisableStateSubmitBtn , commentHandler, hashtagsHandler, pristine, error};
+const onHashtagDisableSubmitBtn = () => {
+  submitButton.disabled = !pristine.validate();
+};
+
+export { onCommentDisableSubmitBtn , commentHandler, hashtagsHandler, pristine, error, onHashtagDisableSubmitBtn };

@@ -1,6 +1,9 @@
 import { isEscKey } from './util.js';
-import { changeDisableStateSubmitBtn, commentHandler, hashtagsHandler, pristine, error } from './validate.js';
+import { showMessage } from './message.js';
+import { onCommentDisableSubmitBtn, commentHandler, hashtagsHandler, pristine, error, onHashtagDisableSubmitBtn } from './validate.js';
 import { updateSliderSettings, onScaleButtonClick } from './effects.js';
+import {sendData} from './api.js';
+import { createSlider } from './effects.js';
 
 const file = document.querySelector('#upload-file');
 const body = document.querySelector('body');
@@ -11,7 +14,7 @@ const comments = form.querySelector('.text__description');
 const hashtags = form.querySelector('.text__hashtags');
 const imageForChange = document.querySelector('.img-upload__preview').querySelector('img');
 const uploadEffects = document.querySelector('.img-upload__effects');
-
+const submitButton = document.querySelector('.img-upload__submit');
 
 const closePopup = () => {
   imgUpload.classList.add('hidden');
@@ -58,15 +61,42 @@ const onImgUploadFieldchange = () => {
 };
 
 
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Публикую...';
+};
+
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
+
 const renderUploadForm = () => {
+  createSlider();
   file.addEventListener('change', onImgUploadFieldchange);
-  hashtags.addEventListener('input', changeDisableStateSubmitBtn);
-  comments.addEventListener('input', changeDisableStateSubmitBtn);
+  hashtags.addEventListener('input', onHashtagDisableSubmitBtn);
+  comments.addEventListener('input', onCommentDisableSubmitBtn);
   pristine.addValidator(hashtags, hashtagsHandler, error);
   pristine.addValidator(comments, commentHandler, error);
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    pristine.validate();
+    if (pristine.validate()) {
+      blockSubmitButton();
+      sendData(() => {
+        showMessage();
+        unblockSubmitButton();
+        closePopup();
+      },
+      () => {
+        showMessage(true);
+        unblockSubmitButton();
+        closePopup();
+      },
+      new FormData(e.target),
+      );
+    }
   });
 };
 
