@@ -1,8 +1,9 @@
 import { isEscKey } from './util.js';
-import {showAlert} from './message.js';
-import { changeDisableStateSubmitBtn, commentHandler, hashtagsHandler, pristine, error } from './validate.js';
+import { showMessage } from './message.js';
+import { onCommentDisableSubmitBtn, commentHandler, hashtagsHandler, pristine, error, onHashtagDisableSubmitBtn } from './validate.js';
 import { updateSliderSettings, onScaleButtonClick } from './effects.js';
 import {sendData} from './api.js';
+import { createSlider } from './effects.js';
 
 const file = document.querySelector('#upload-file');
 const body = document.querySelector('body');
@@ -73,9 +74,10 @@ const unblockSubmitButton = () => {
 
 
 const renderUploadForm = () => {
+  createSlider();
   file.addEventListener('change', onImgUploadFieldchange);
-  hashtags.addEventListener('input', changeDisableStateSubmitBtn);
-  comments.addEventListener('input', changeDisableStateSubmitBtn);
+  hashtags.addEventListener('input', onHashtagDisableSubmitBtn);
+  comments.addEventListener('input', onCommentDisableSubmitBtn);
   pristine.addValidator(hashtags, hashtagsHandler, error);
   pristine.addValidator(comments, commentHandler, error);
   form.addEventListener('submit', (e) => {
@@ -83,12 +85,12 @@ const renderUploadForm = () => {
     if (pristine.validate()) {
       blockSubmitButton();
       sendData(() => {
-        showAlert();
+        showMessage();
         unblockSubmitButton();
         closePopup();
       },
       () => {
-        showAlert(true);
+        showMessage(true);
         unblockSubmitButton();
         closePopup();
       },

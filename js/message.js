@@ -1,6 +1,15 @@
 import { isEscKey } from './util.js';
 
-const showAlert = (isError) => {
+const onWindowEscKeydown = (evt) => {
+  const message = document.querySelector('.js-message');
+  if (isEscKey(evt)) {
+    document.removeEventListener('keydown', onWindowEscKeydown);
+    message.remove();
+  }
+};
+
+
+const showMessage = (isError) => {
   const templateName = isError ? 'error' : 'success';
   const template = document.querySelector(`#${templateName}`).content.querySelector('section');
   template.classList.add('js-message');
@@ -14,12 +23,4 @@ const showAlert = (isError) => {
   });
 };
 
-function onWindowEscKeydown(evt) {
-  const message = document.querySelector('.js-message');
-  if (isEscKey(evt)) {
-    document.removeEventListener('keydown', onWindowEscKeydown);
-    message.remove();
-  }
-}
-
-export {showAlert};
+export { showMessage };

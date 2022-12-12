@@ -1,23 +1,21 @@
-const ServerToPost = 'https://26.javascript.pages.academy/kekstagram';
-const ServerToGet = 'https://26.javascript.pages.academy/kekstagram/data';
+const URL_POST = 'https://26.javascript.pages.academy/kekstagram';
+const URL_GET = 'https://26.javascript.pages.academy/kekstagram/data';
 
 const getData = (onSuccess) => {
-  fetch(ServerToGet)
+  fetch(URL_GET)
     .then((response) => {
       if (response.ok) {
         return response.json();
       }
-      throw new Error();
     })
     .then((data) => {
       onSuccess(data);
-    })
-    .catch(() => {});
+    });
 };
 
 const sendData = (onSuccess, onFail, body) => {
   fetch(
-    ServerToPost,
+    URL_POST,
     {
       method: 'POST',
       body,
@@ -35,4 +33,4 @@ const sendData = (onSuccess, onFail, body) => {
     });
 };
 
-export {getData, sendData};
+export { getData, sendData };
