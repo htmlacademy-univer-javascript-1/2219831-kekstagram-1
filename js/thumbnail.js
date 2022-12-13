@@ -10,20 +10,23 @@ const getPictureTemplate = ({id, url, comments, likes}) => `<a href="#" class="p
 
 const mainContainer = document.querySelector('.js-pictures');
 const createPhotosAround = (data) => mainContainer.insertAdjacentHTML('beforeend', data.map((photo) => getPictureTemplate(photo)).join(''));
+let photos = [];
 
+const onMainContainerClick = (evt) => {
+  const target = evt.target;
+  const parent = target.closest('.js-picture');
+
+  if (parent) {
+    const id = parent.dataset.id;
+    const [ photo ] = photos.filter((element) => element.id === +id);
+    openBigPicture(photo);
+  }
+};
 
 const bringPicturesLife = (data) => {
+  photos = data.slice();
   createPhotosAround(data);
-  mainContainer.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    const target = evt.target;
-    const parent = target.closest('.js-picture');
-    if (parent) {
-      const id = parent.dataset.id;
-      const [ photo ] = data.filter((element) => element.id === +id);
-      openBigPicture(photo);
-    }
-  });
+  mainContainer.addEventListener('click', onMainContainerClick);
 };
 
 export { bringPicturesLife };

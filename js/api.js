@@ -1,15 +1,21 @@
 const URL_POST = 'https://26.javascript.pages.academy/kekstagram';
 const URL_GET = 'https://26.javascript.pages.academy/kekstagram/data';
 
-const getData = (onSuccess) => {
+const getData = (onSuccess, onFail) => {
   fetch(URL_GET)
     .then((response) => {
       if (response.ok) {
         return response.json();
       }
+      else {
+        onFail();
+      }
     })
     .then((data) => {
       onSuccess(data);
+    })
+    .catch(() => {
+      onFail();
     });
 };
 

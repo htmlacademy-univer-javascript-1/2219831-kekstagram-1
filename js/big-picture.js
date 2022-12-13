@@ -1,4 +1,4 @@
-import { isEscKey } from './util.js';
+import { isEscKey } from './utils.js';
 import { STEP_ADDED_COMMENTS, DEFAULT_RENDERED_COMMENTS } from './consts.js';
 
 const bigPicture = document.querySelector('.big-picture');

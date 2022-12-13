@@ -1,8 +1,7 @@
-import { checkStringLength } from './util.js';
+import { checkStringLength } from './utils.js';
 import { MAX_COMMENT_LENGTH, MaxHashtag, ErrorMessage } from './consts.js';
 
 
-const submitButton = document.querySelector('.img-upload__submit');
 const form = document.querySelector('.img-upload__form');
 
 
@@ -21,7 +20,7 @@ let errorMessage = '';
 
 const error = () => errorMessage;
 
-const hashtagsHandler = (string) => {
+const onHashtagsInput = (string) => {
   errorMessage = '';
 
   const inputText = string.toLowerCase().trim();
@@ -77,7 +76,7 @@ const hashtagsHandler = (string) => {
   });
 };
 
-const commentHandler = (string) => {
+const onCommentInput = (string) => {
   errorMessage = '';
 
   const inputText = string.trim();
@@ -98,12 +97,4 @@ const commentHandler = (string) => {
   return !isInvalid;
 };
 
-const onCommentDisableSubmitBtn = () => {
-  submitButton.disabled = !pristine.validate();
-};
-
-const onHashtagDisableSubmitBtn = () => {
-  submitButton.disabled = !pristine.validate();
-};
-
-export { onCommentDisableSubmitBtn , commentHandler, hashtagsHandler, pristine, error, onHashtagDisableSubmitBtn };
+export { onCommentInput, onHashtagsInput, pristine, error };
