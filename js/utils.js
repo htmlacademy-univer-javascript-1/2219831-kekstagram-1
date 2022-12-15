@@ -30,4 +30,16 @@ const showAlert = () => {
   }, ALERT_SHOW_TIME);
 };
 
-export{ getRandomPositiveInteger, isEscKey, checkStringLength, showAlert };
+const shuffleArray = (arr) => arr.map((a) => [Math.random(), a]).sort((a, b) => a[0] - b[0]).map((a) => a[1]);
+
+const comparePicturesByComments = (pictureA, pictureB) => pictureB.comments.length - pictureA.comments.length;
+
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export{ getRandomPositiveInteger, isEscKey, checkStringLength, showAlert, shuffleArray, comparePicturesByComments, debounce };
