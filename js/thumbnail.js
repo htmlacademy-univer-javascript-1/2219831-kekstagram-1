@@ -23,10 +23,15 @@ const onMainContainerClick = (evt) => {
   }
 };
 
-const bringPicturesLife = (data) => {
+const removeThumbnails = () => {
+  const pictures = mainContainer.querySelectorAll('.js-picture');
+  pictures.forEach((picture) => picture.remove());
+};
+
+const renderThumbnails = (data) => {
   photos = data.slice();
   createPhotosAround(data);
   mainContainer.addEventListener('click', onMainContainerClick);
 };
 
-export { bringPicturesLife };
+export { renderThumbnails, removeThumbnails };
