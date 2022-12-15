@@ -1,4 +1,3 @@
-//import { renderThumbnails } from './thumbnail.js';
 import { initFilters } from './filter.js';
 import { renderUploadForm } from './user-form.js';
 import { getData } from './api.js';
