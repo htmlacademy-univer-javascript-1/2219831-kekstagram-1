@@ -9,12 +9,7 @@ const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
 
 const checkScaleClicks = (val) => {
-  if (val > ScaleRange.MAX) {
-    val = ScaleRange.MAX;
-  }
-  if (val <= ScaleRange.MIN){
-    val = ScaleRange.MIN;
-  }
+  val = Math.min(Math.max(val, ScaleRange.MIN), ScaleRange.MAX);
   return val;
 };
 
