@@ -5,6 +5,8 @@ import { updateSliderSettings, onScaleButtonClick } from './effects.js';
 import {sendData} from './api.js';
 import { createSlider } from './effects.js';
 
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
 const file = document.querySelector('#upload-file');
 const body = document.querySelector('body');
 const imgUpload = document.querySelector('.img-upload__overlay');
@@ -15,6 +17,8 @@ const hashtags = form.querySelector('.text__hashtags');
 const imageForChange = document.querySelector('.img-upload__preview').querySelector('img');
 const uploadEffects = document.querySelector('.img-upload__effects');
 const submitButton = document.querySelector('.img-upload__submit');
+const fileChooser = document.querySelector('.img-upload__start input[type=file]');
+
 
 const closePopup = () => {
   imgUpload.classList.add('hidden');
@@ -65,7 +69,6 @@ const onImgUploadFieldchange = () => {
   checkFieldInFocus(hashtags);
   uploadEffects.addEventListener('change', updateSliderSettings);
   onScaleButtonClick();
-  //здесь будет условие для формата файла (это делается в дз 12 модуля)
 };
 
 
@@ -83,6 +86,16 @@ const unblockSubmitButton = () => {
 
 const renderUploadForm = () => {
   createSlider();
+  fileChooser.addEventListener('change', () => {
+    const upldFile = fileChooser.files[0];
+    const fileName = upldFile.name.toLowerCase();
+
+    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+    if (matches) {
+      imageForChange.src = URL.createObjectURL(upldFile);
+    }
+  });
   file.addEventListener('change', onImgUploadFieldchange);
   hashtags.addEventListener('input', onHashtagDisableSubmitBtn);
   comments.addEventListener('input', onCommentDisableSubmitBtn);
@@ -100,7 +113,9 @@ const renderUploadForm = () => {
       () => {
         showMessage(true);
         unblockSubmitButton();
-        closePopup();
+        imgUpload.classList.add('hidden');
+        body.classList.remove('modal-open');
+        document.querySelector('.img-upload__effect-level').classList.add('hidden');
       },
       new FormData(e.target),
       );

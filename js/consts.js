@@ -1,10 +1,3 @@
-export const MAX_COUNT_PHOTOS = 25;
-
-export const CountLike = {
-  MIN: 15,
-  MAX: 200,
-};
-
 export const MAX_COMMENT_LENGTH = 140;
 
 export const MaxHashtag = {
@@ -21,11 +14,6 @@ export const ErrorMessage = {
   UBNORMAL_SYMBOLS:
     'Хэш-тег содержит недопустимые символы (строка после решётки должна состоять из букв и чисел)',
   COMMENT_MAX_LENGTH: `Максимальная длина комментария не может составлять больше ${MAX_COMMENT_LENGTH} символов`,
-};
-
-export const CountComment = {
-  MIN: 0,
-  MAX: 23,
 };
 
 export const STEP_ADDED_COMMENTS = 5;
