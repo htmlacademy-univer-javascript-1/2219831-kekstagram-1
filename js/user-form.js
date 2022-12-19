@@ -1,7 +1,7 @@
 import { isEscKey } from './utils.js';
 import { showMessage } from './message.js';
 import { onCommentInput, onHashtagsInput, pristine, error } from './validate.js';
-import { updateSliderSettings, onScaleButtonClick } from './effects.js';
+import { updateSliderSettings, changeScale } from './effects.js';
 import {sendData} from './api.js';
 import { createSlider } from './effects.js';
 
@@ -18,6 +18,8 @@ const imageForChange = document.querySelector('.img-upload__preview').querySelec
 const uploadEffects = document.querySelector('.img-upload__effects');
 const submitButton = document.querySelector('.img-upload__submit');
 const fileChooser = document.querySelector('.img-upload__start input[type=file]');
+const scaleControlSmaller = document.querySelector('.scale__control--smaller');
+const scaleControlBigger = document.querySelector('.scale__control--bigger');
 
 
 const closePopup = () => {
@@ -56,6 +58,12 @@ const onCommentDisableSubmitBtn = () => {
 
 const onHashtagDisableSubmitBtn = () => {
   submitButton.disabled = !pristine.validate();
+};
+
+
+const onScaleButtonClick = () => {
+  scaleControlBigger.addEventListener('click', () => changeScale(1));
+  scaleControlSmaller.addEventListener('click', () => changeScale(-1));
 };
 
 const onImgUploadFieldchange = () => {
@@ -113,9 +121,6 @@ const renderUploadForm = () => {
       () => {
         showMessage(true);
         unblockSubmitButton();
-        imgUpload.classList.add('hidden');
-        body.classList.remove('modal-open');
-        document.querySelector('.img-upload__effect-level').classList.add('hidden');
       },
       new FormData(e.target),
       );
