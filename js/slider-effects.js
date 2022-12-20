@@ -1,4 +1,4 @@
-import { Effects, SCALE_STEP, ScaleRange } from './consts.js';
+import { Effect, SCALE_STEP, ScaleRange } from './consts.js';
 
 const imageForChange = document.querySelector('.img-upload__preview').querySelector('img');
 const slider = document.querySelector('.effect-level__slider');
@@ -39,11 +39,11 @@ const updateSliderSettings = (evt) => {
   sliderWrapper.classList.remove('hidden');
   imageForChange.removeAttribute('class');
   imageForChange.classList.add(`effects__preview--${effect}`);
-  slider.noUiSlider.updateOptions(Effects[effect].options);
+  slider.noUiSlider.updateOptions(Effect[effect].options);
 
   slider.noUiSlider.on('update', () => {
     sliderValue.value = slider.noUiSlider.get();
-    imageForChange.style.filter = `${Effects[effect].filter}(${sliderValue.value}${Effects[effect].unit})`;
+    imageForChange.style.filter = `${Effect[effect].filter}(${sliderValue.value}${Effect[effect].unit})`;
   });
 };
 

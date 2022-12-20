@@ -1,9 +1,9 @@
 import { isEscKey } from './utils.js';
 import { showMessage } from './message.js';
-import { onCommentInput, onHashtagsInput, pristine, error } from './validate.js';
-import { updateSliderSettings, changeScale } from './effects.js';
+import { onCommentInput, onHashtagsInput, pristine, getError } from './validate.js';
+import { updateSliderSettings, changeScale } from './slider-effects.js';
 import {sendData} from './api.js';
-import { createSlider } from './effects.js';
+import { createSlider } from './slider-effects.js';
 
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
@@ -61,12 +61,12 @@ const onHashtagDisableSubmitBtn = () => {
 };
 
 
-const onScaleButtonClick = () => {
+const setScaleResize = () => {
   scaleControlBigger.addEventListener('click', () => changeScale(1));
   scaleControlSmaller.addEventListener('click', () => changeScale(-1));
 };
 
-const onImgUploadFieldchange = () => {
+const onImgUploadFieldChange = () => {
   imageForChange.removeAttribute('class');
   imageForChange.removeAttribute('style');
   imgUpload.classList.remove('hidden');
@@ -76,7 +76,6 @@ const onImgUploadFieldchange = () => {
   checkFieldInFocus(comments);
   checkFieldInFocus(hashtags);
   uploadEffects.addEventListener('change', updateSliderSettings);
-  onScaleButtonClick();
 };
 
 
@@ -93,22 +92,23 @@ const unblockSubmitButton = () => {
 
 
 const renderUploadForm = () => {
+  setScaleResize();
   createSlider();
   fileChooser.addEventListener('change', () => {
-    const upldFile = fileChooser.files[0];
-    const fileName = upldFile.name.toLowerCase();
+    const upload = fileChooser.files[0];
+    const fileName = upload.name.toLowerCase();
 
     const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
     if (matches) {
-      imageForChange.src = URL.createObjectURL(upldFile);
+      imageForChange.src = URL.createObjectURL(upload);
     }
   });
-  file.addEventListener('change', onImgUploadFieldchange);
+  file.addEventListener('change', onImgUploadFieldChange);
   hashtags.addEventListener('input', onHashtagDisableSubmitBtn);
   comments.addEventListener('input', onCommentDisableSubmitBtn);
-  pristine.addValidator(hashtags, onHashtagsInput, error);
-  pristine.addValidator(comments, onCommentInput, error);
+  pristine.addValidator(hashtags, onHashtagsInput, getError);
+  pristine.addValidator(comments, onCommentInput, getError);
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     if (pristine.validate()) {
