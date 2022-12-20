@@ -1,9 +1,10 @@
 import { isEscKey } from './utils.js';
 import { showMessage } from './message.js';
-import { onCommentInput, onHashtagsInput, pristine, error } from './validate.js';
-import { updateSliderSettings, onScaleButtonClick } from './effects.js';
+import { onCommentInput, onHashtagsInput, pristine, getError } from './validate.js';
+import { updateSliderSettings } from './slider-effects.js';
 import {sendData} from './api.js';
-import { createSlider } from './effects.js';
+import { createSlider } from './slider-effects.js';
+import { SCALE_STEP, ScaleRange } from './consts.js';
 
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
@@ -18,6 +19,20 @@ const imageForChange = document.querySelector('.img-upload__preview').querySelec
 const uploadEffects = document.querySelector('.img-upload__effects');
 const submitButton = document.querySelector('.img-upload__submit');
 const fileChooser = document.querySelector('.img-upload__start input[type=file]');
+const scaleControlSmaller = document.querySelector('.scale__control--smaller');
+const scaleControlBigger = document.querySelector('.scale__control--bigger');
+const scaleControlValue = document.querySelector('.scale__control--value');
+
+const checkScaleClicks = (val) => {
+  val = Math.min(Math.max(val, ScaleRange.MIN), ScaleRange.MAX);
+  return val;
+};
+
+const changeScale = (val) => {
+  const sliderNumber = checkScaleClicks(Number(scaleControlValue.value.replace('%', '')) + SCALE_STEP * val);
+  imageForChange.style.transform = `scale(${sliderNumber / 100})`;
+  scaleControlValue.value = `${sliderNumber}%`;
+};
 
 
 const closePopup = () => {
@@ -58,7 +73,15 @@ const onHashtagDisableSubmitBtn = () => {
   submitButton.disabled = !pristine.validate();
 };
 
-const onImgUploadFieldchange = () => {
+const onScaleBiggerClick = () => {
+  changeScale(1);
+};
+
+const onScaleSmallerClick = () => {
+  changeScale(-1);
+};
+
+const onImgUploadFieldChange = () => {
   imageForChange.removeAttribute('class');
   imageForChange.removeAttribute('style');
   imgUpload.classList.remove('hidden');
@@ -68,7 +91,6 @@ const onImgUploadFieldchange = () => {
   checkFieldInFocus(comments);
   checkFieldInFocus(hashtags);
   uploadEffects.addEventListener('change', updateSliderSettings);
-  onScaleButtonClick();
 };
 
 
@@ -85,22 +107,24 @@ const unblockSubmitButton = () => {
 
 
 const renderUploadForm = () => {
+  scaleControlBigger.addEventListener('click', onScaleBiggerClick);
+  scaleControlSmaller.addEventListener('click', onScaleSmallerClick);
   createSlider();
   fileChooser.addEventListener('change', () => {
-    const upldFile = fileChooser.files[0];
-    const fileName = upldFile.name.toLowerCase();
+    const upload = fileChooser.files[0];
+    const fileName = upload.name.toLowerCase();
 
     const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
     if (matches) {
-      imageForChange.src = URL.createObjectURL(upldFile);
+      imageForChange.src = URL.createObjectURL(upload);
     }
   });
-  file.addEventListener('change', onImgUploadFieldchange);
+  file.addEventListener('change', onImgUploadFieldChange);
   hashtags.addEventListener('input', onHashtagDisableSubmitBtn);
   comments.addEventListener('input', onCommentDisableSubmitBtn);
-  pristine.addValidator(hashtags, onHashtagsInput, error);
-  pristine.addValidator(comments, onCommentInput, error);
+  pristine.addValidator(hashtags, onHashtagsInput, getError);
+  pristine.addValidator(comments, onCommentInput, getError);
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     if (pristine.validate()) {
@@ -113,9 +137,6 @@ const renderUploadForm = () => {
       () => {
         showMessage(true);
         unblockSubmitButton();
-        imgUpload.classList.add('hidden');
-        body.classList.remove('modal-open');
-        document.querySelector('.img-upload__effect-level').classList.add('hidden');
       },
       new FormData(e.target),
       );

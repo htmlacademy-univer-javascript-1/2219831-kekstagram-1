@@ -1,12 +1,5 @@
 import { ALERT_SHOW_TIME } from './consts.js';
 
-const getRandomPositiveInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
-  const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
-
 const checkStringLength = (string, length) => string.length <= length;
 
 const isEscKey = (evt) => evt.key === 'Escape';
@@ -34,12 +27,12 @@ const shuffleArray = (arr) => arr.map((a) => [Math.random(), a]).sort((a, b) => 
 
 const comparePicturesByComments = (pictureA, pictureB) => pictureB.comments.length - pictureA.comments.length;
 
-function debounce (callback, timeoutDelay = 500) {
+const debounce = (callback, timeoutDelay = 500) => {
   let timeoutId;
   return (...rest) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
-}
+};
 
-export{ getRandomPositiveInteger, isEscKey, checkStringLength, showAlert, shuffleArray, comparePicturesByComments, debounce };
+export{ isEscKey, checkStringLength, showAlert, shuffleArray, comparePicturesByComments, debounce };

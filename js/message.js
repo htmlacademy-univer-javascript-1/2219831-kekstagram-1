@@ -8,6 +8,10 @@ const onWindowEscKeydown = (evt) => {
   }
 };
 
+const onPopupClick = () => {
+  const popup = document.querySelector('.js-message');
+  popup.remove();
+};
 
 const showMessage = (isError) => {
   const templateName = isError ? 'error' : 'success';
@@ -18,12 +22,8 @@ const showMessage = (isError) => {
   document.body.append(popup);
   const button = popup.querySelector('button');
   document.addEventListener('keydown', onWindowEscKeydown);
-  button.addEventListener('click', () => {
-    popup.remove();
-  });
-  document.addEventListener('click', () => {
-    popup.remove();
-  });
+  button.addEventListener('click', onPopupClick);
+  document.addEventListener('click', onPopupClick);
 };
 
 export { showMessage };

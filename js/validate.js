@@ -18,7 +18,7 @@ const makeUniqueHashtags = (hashtag) => {
 
 let errorMessage = '';
 
-const error = () => errorMessage;
+const getError = () => errorMessage;
 
 const onHashtagsInput = (string) => {
   errorMessage = '';
@@ -97,4 +97,4 @@ const onCommentInput = (string) => {
   return !isInvalid;
 };
 
-export { onCommentInput, onHashtagsInput, pristine, error };
+export { onCommentInput, onHashtagsInput, pristine, getError };

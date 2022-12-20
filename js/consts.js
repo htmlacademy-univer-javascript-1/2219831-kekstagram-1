@@ -19,7 +19,7 @@ export const ErrorMessage = {
 export const STEP_ADDED_COMMENTS = 5;
 export const DEFAULT_RENDERED_COMMENTS = 5;
 
-export const Effects = {
+export const Effect = {
   none: {
     name: 'none',
     filter: '',
