@@ -1,9 +1,10 @@
 import { isEscKey } from './utils.js';
 import { showMessage } from './message.js';
 import { onCommentInput, onHashtagsInput, pristine, getError } from './validate.js';
-import { updateSliderSettings, changeScale } from './slider-effects.js';
+import { updateSliderSettings } from './slider-effects.js';
 import {sendData} from './api.js';
 import { createSlider } from './slider-effects.js';
+import { SCALE_STEP, ScaleRange } from './consts.js';
 
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
@@ -20,6 +21,18 @@ const submitButton = document.querySelector('.img-upload__submit');
 const fileChooser = document.querySelector('.img-upload__start input[type=file]');
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
+const scaleControlValue = document.querySelector('.scale__control--value');
+
+const checkScaleClicks = (val) => {
+  val = Math.min(Math.max(val, ScaleRange.MIN), ScaleRange.MAX);
+  return val;
+};
+
+const changeScale = (val) => {
+  const sliderNumber = checkScaleClicks(Number(scaleControlValue.value.replace('%', '')) + SCALE_STEP * val);
+  imageForChange.style.transform = `scale(${sliderNumber / 100})`;
+  scaleControlValue.value = `${sliderNumber}%`;
+};
 
 
 const closePopup = () => {
@@ -60,10 +73,12 @@ const onHashtagDisableSubmitBtn = () => {
   submitButton.disabled = !pristine.validate();
 };
 
+const onScaleBiggerClick = () => {
+  changeScale(1);
+};
 
-const setScaleResize = () => {
-  scaleControlBigger.addEventListener('click', () => changeScale(1));
-  scaleControlSmaller.addEventListener('click', () => changeScale(-1));
+const onScaleSmallerClick = () => {
+  changeScale(-1);
 };
 
 const onImgUploadFieldChange = () => {
@@ -92,7 +107,8 @@ const unblockSubmitButton = () => {
 
 
 const renderUploadForm = () => {
-  setScaleResize();
+  scaleControlBigger.addEventListener('click', onScaleBiggerClick);
+  scaleControlSmaller.addEventListener('click', onScaleSmallerClick);
   createSlider();
   fileChooser.addEventListener('change', () => {
     const upload = fileChooser.files[0];

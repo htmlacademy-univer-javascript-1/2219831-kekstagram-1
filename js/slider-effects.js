@@ -1,21 +1,10 @@
-import { Effect, SCALE_STEP, ScaleRange } from './consts.js';
+import { Effect } from './consts.js';
 
 const imageForChange = document.querySelector('.img-upload__preview').querySelector('img');
 const slider = document.querySelector('.effect-level__slider');
 const sliderValue = document.querySelector('.effect-level__value');
 const sliderWrapper = document.querySelector('.img-upload__effect-level');
-const scaleControlValue = document.querySelector('.scale__control--value');
 
-const checkScaleClicks = (val) => {
-  val = Math.min(Math.max(val, ScaleRange.MIN), ScaleRange.MAX);
-  return val;
-};
-
-const changeScale = (val) => {
-  const sliderNumber = checkScaleClicks(Number(scaleControlValue.value.replace('%', '')) + SCALE_STEP * val);
-  imageForChange.style.transform = `scale(${sliderNumber / 100})`;
-  scaleControlValue.value = `${sliderNumber}%`;
-};
 
 const createSlider = () => {
   sliderWrapper.classList.add('hidden');
@@ -48,4 +37,4 @@ const updateSliderSettings = (evt) => {
 };
 
 
-export { updateSliderSettings, createSlider, changeScale };
+export { updateSliderSettings, createSlider };
